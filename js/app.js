@@ -67,6 +67,17 @@ let boxOpenCard = [];
 
 let boxMatchCard = [];
 
+/**FUNCTION DISABLE CLICKS */
+
+function disableClicks() {
+  document.body.style.pointerEvents = "none";
+}
+
+/**FUNCTION ENABLE CLICKS */
+function enableClicks() {
+  document.body.style.pointerEvents = "auto";
+}
+
 /* FUNCTION TO INSERT THE CARDS IN THE BOX  STORING ONLY 2 CARD */
 
 function insertCard(cards) {
@@ -77,7 +88,7 @@ function insertCard(cards) {
 /* FUNCTION TO REMOVE CLASS TO DISPLAY CARD*/
 
 function removeClass() {
-  boxOpenCard.forEach(card => {
+  listCard.forEach(card => {
     card.classList.remove("open", "show");
     clearArray();
   });
@@ -93,21 +104,16 @@ function clearArray() {
 /* EVENT LISTENER TO FLIP THE CARDS ADDING THE CLASSES*/
 
 listCard.forEach(function(card) {
-  card.addEventListener("click", function() {
+  card.addEventListener("click", function(e) {
     if (
       !card.classList.contains("open") &&
       !card.classList.contains("show") &&
       !card.classList.contains("match")
     ) {
       card.classList.add("open", "show");
-      insertCard(card);
-
-      if (boxOpenCard.length >= 2) {
+      boxOpenCard.push(card);
+      if (boxOpenCard.length === 2) {
         checkMatch();
-
-        if (boxOpenCard.length >= 3) {
-          card.classList.remove("open", "show");
-        }
       }
     }
   });
@@ -120,6 +126,7 @@ function insertMatch(x, y) {
 /* FUNCTION TO CHECK IF THE CARDS MATCH*/
 
 function checkMatch() {
+  disableClicks();
   if (boxOpenCard[0].dataset.name === boxOpenCard[1].dataset.name) {
     let card1 = boxOpenCard[0];
     let card2 = boxOpenCard[1];
@@ -127,12 +134,15 @@ function checkMatch() {
     card1.classList.remove("open", "show");
     card2.classList.add("match");
     card2.classList.remove("open", "show");
+
     insertMatch(card1, card2);
+    setTimeout(enableClicks, 700);
     moveCounter();
     setTimeout(clearArray, 1000);
   } else {
+    setTimeout(enableClicks, 700);
     moveCounter();
-    setTimeout(removeClass, 500);
+    setTimeout(removeClass, 700);
   }
 }
 
@@ -160,6 +170,9 @@ function restart() {
   boxMatchCard = [];
   moves = 0;
   counterMoves.innerHTML = moves;
+  for (i = 0; i < 3; i++) {
+    starsConteiner[i].style.visibility = "visible";
+  }
 }
 
 restartButton.addEventListener("click", restart);
@@ -167,10 +180,60 @@ restartButton.addEventListener("click", restart);
 /**MODAL*/
 
 let modal = document.querySelector(".modal");
+let closeButton = document.querySelector(".close-button");
+let message = (document.querySelector(".message").innerHTML = generatMessage());
+
+function generatMessage() {
+  return `<p>Good job, you won the game </br>
+               Moves: ${moves}</br>
+               Score: ${scoreStars()}</br>
+               Time: </p>`;
+}
+
+function closeModal() {
+  modal.classList.remove("show-modal");
+  restart();
+}
 
 function displayModal() {
-  modal.classList.add("show-modal");
+  if (boxMatchCard.length == 16) {
+    modal.classList.add("show-modal");
+  }
 }
+displayModal();
+
+closeButton.addEventListener("click", closeModal);
+
+/**SCORE POINT */
+
+let stars = document.querySelectorAll(".stars li");
+let resetStars = document.querySelectorAll("ul.stars");
+
+let starsConteiner = [...stars];
+
+function scoreStars() {
+  if (moves > 8 && moves < 15) {
+    for (i = 0; i < 3; i++) {
+      if (i > 2) {
+        starsConteiner[i].style.visibility = "collapse";
+      }
+    }
+  } else if (moves > 15 && moves < 30) {
+    for (i = 0; i < 3; i++) {
+      if (i > 1) {
+        starsConteiner[i].style.visibility = "collapse";
+      }
+    }
+  } else if (moves > 30) {
+    for (i = 0; i < 3; i++) {
+      if (i > 0) {
+        starsConteiner[i].style.visibility = "collapse";
+      }
+    }
+  }
+}
+
+/**TIMER */
 
 /*
  * Display the cards on the page
