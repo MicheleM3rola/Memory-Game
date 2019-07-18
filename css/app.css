@@ -91,14 +91,15 @@ h1 {
   margin-bottom: 10px;
 }
 
-.score-panel .stars {
+.stars {
   margin: 0;
   padding: 0;
-  display: inline-block;
+  display: flex;
   margin: 0 5px 0 0;
+  justify-content: center;
 }
 
-.score-panel .stars li {
+.stars li {
   list-style: none;
   display: inline-block;
 }
@@ -150,4 +151,20 @@ h1 {
   visibility: visible;
   transform: scale(1);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.timer {
+  text-transform: uppercase;
+  color: orange;
+}
+
+.start {
+  font-size: 40px;
+  padding: 10px;
+  text-transform: uppercase;
+  background-color: black;
+  color: white;
+  border-radius: 15%;
+  box-shadow: 5px 10px 8px #888888;
+  cursor: pointer;
 }

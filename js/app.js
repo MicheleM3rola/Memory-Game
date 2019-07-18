@@ -82,7 +82,7 @@ function enableClicks() {
 
 function insertCard(cards) {
   boxOpenCard.push(cards);
-  boxOpenCard.splice(3, 1);
+  boxOpenCard.splice(2, 1);
 }
 
 /* FUNCTION TO REMOVE CLASS TO DISPLAY CARD*/
@@ -98,6 +98,11 @@ function removeClass() {
 
 function clearArray() {
   boxOpenCard = [];
+  if (boxMatchCard.length === 16) {
+    scoreStars();
+    displayModal();
+  }
+
   return boxOpenCard;
 }
 
@@ -136,13 +141,13 @@ function checkMatch() {
     card2.classList.remove("open", "show");
 
     insertMatch(card1, card2);
-    setTimeout(enableClicks, 700);
     moveCounter();
     setTimeout(clearArray, 1000);
-  } else {
     setTimeout(enableClicks, 700);
-    moveCounter();
+  } else {
     setTimeout(removeClass, 700);
+    moveCounter();
+    setTimeout(enableClicks, 700);
   }
 }
 
@@ -166,6 +171,7 @@ function restart() {
   listCard.forEach(card => {
     card.classList.remove("open", "show", "match");
   });
+
   boxOpenCard = [];
   boxMatchCard = [];
   moves = 0;
@@ -173,22 +179,30 @@ function restart() {
   for (i = 0; i < 3; i++) {
     starsConteiner[i].style.visibility = "visible";
   }
+  clearInterval(timer);
+  secCounter = 0;
+  insertTimer.innerHTML = convertSeconds(secCounter);
+  location.reload();
 }
 
 restartButton.addEventListener("click", restart);
+
+/**SHUFFLE THE CARD WHEN YOU START THE GAME */
+
+function startGame() {
+  let shuffleCard = shuffle(cards);
+  for (let i = 0; i < shuffleCard.length; i++) {
+    [].forEach.call(shuffleCard, function(item) {
+      deckCard.appendChild(item);
+    });
+  }
+}
 
 /**MODAL*/
 
 let modal = document.querySelector(".modal");
 let closeButton = document.querySelector(".close-button");
-let message = (document.querySelector(".message").innerHTML = generatMessage());
-
-function generatMessage() {
-  return `<p>Good job, you won the game </br>
-               Moves: ${moves}</br>
-               Score: ${scoreStars()}</br>
-               Time: </p>`;
-}
+let message = document.querySelector(".message");
 
 function closeModal() {
   modal.classList.remove("show-modal");
@@ -196,11 +210,19 @@ function closeModal() {
 }
 
 function displayModal() {
-  if (boxMatchCard.length == 16) {
-    modal.classList.add("show-modal");
-  }
+  modal.classList.add("show-modal");
+
+  let congMex = ` Congratulations You Won!! </br>
+  
+   </br>
+   Moves : ${moves}
+   </br>
+   Times : ${secCounter} sec`;
+
+  clearInterval(timer);
+
+  return (message.innerHTML = congMex);
 }
-displayModal();
 
 closeButton.addEventListener("click", closeModal);
 
@@ -212,19 +234,19 @@ let resetStars = document.querySelectorAll("ul.stars");
 let starsConteiner = [...stars];
 
 function scoreStars() {
-  if (moves > 8 && moves < 15) {
+  if (moves > 8 && moves < 10) {
     for (i = 0; i < 3; i++) {
       if (i > 2) {
         starsConteiner[i].style.visibility = "collapse";
       }
     }
-  } else if (moves > 15 && moves < 30) {
+  } else if (moves > 10 && moves < 17) {
     for (i = 0; i < 3; i++) {
       if (i > 1) {
         starsConteiner[i].style.visibility = "collapse";
       }
     }
-  } else if (moves > 30) {
+  } else if (moves > 17) {
     for (i = 0; i < 3; i++) {
       if (i > 0) {
         starsConteiner[i].style.visibility = "collapse";
@@ -234,6 +256,26 @@ function scoreStars() {
 }
 
 /**TIMER */
+
+let insertTimer = document.querySelector("#time");
+let startTimer = document.querySelector(".start");
+
+let secCounter = 0;
+let timer;
+function convertSeconds(s) {
+  let min = Math.floor(s / 60);
+  let sec = s % 60;
+  return min + ":" + sec;
+}
+
+function timerFun() {
+  timer = setInterval(function() {
+    secCounter++;
+    insertTimer.innerHTML = convertSeconds(secCounter);
+  }, 1000);
+}
+
+startTimer.addEventListener("click", timerFun);
 
 /*
  * Display the cards on the page
