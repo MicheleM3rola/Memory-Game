@@ -188,17 +188,6 @@ function restart() {
 
 restartButton.addEventListener("click", restart);
 
-/**SHUFFLE THE CARD WHEN YOU START THE GAME */
-
-function startGame() {
-  let shuffleCard = shuffle(cards);
-  for (let i = 0; i < shuffleCard.length; i++) {
-    [].forEach.call(shuffleCard, function(item) {
-      deckCard.appendChild(item);
-    });
-  }
-}
-
 /**MODAL*/
 
 let modal = document.querySelector(".modal");
