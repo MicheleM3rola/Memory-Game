@@ -89,6 +89,9 @@ h1 {
   text-align: left;
   width: 345px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .stars {
@@ -153,9 +156,25 @@ h1 {
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 
+.modal-stars {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  margin: 0 5px 0 0;
+  justify-content: center;
+}
+
+.modal-stars li {
+  list-style: none;
+  display: inline-block;
+}
+
 .timer {
   text-transform: uppercase;
   color: orange;
+  font-size: 18px;
+  text-align: center;
+  margin: 0;
 }
 
 .start {
@@ -167,4 +186,18 @@ h1 {
   border-radius: 15%;
   box-shadow: 5px 10px 8px #888888;
   cursor: pointer;
+}
+
+#btn-play {
+  font-size: 20px;
+  text-transform: uppercase;
+  background-color: black;
+  color: white;
+  border-radius: 15%;
+  box-shadow: 5px 10px 8px #888888;
+  cursor: pointer;
+  padding: 8px;
+  margin-top: 20px;
+  position: relative;
+  left: 30%;
 }

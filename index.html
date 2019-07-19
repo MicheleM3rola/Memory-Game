@@ -21,13 +21,15 @@
       </header>
 
       <section class="score-panel">
-        <!--<ul class="stars">
+        <ul class="stars">
           <li><i class="fa fa-star"></i></li>
           <li><i class="fa fa-star"></i></li>
           <li><i class="fa fa-star"></i></li>
-        </ul>-->
+        </ul>
 
         <span class="moves">0</span> Moves
+
+        <h2 class="timer">Timer <span id="time"></span></h2>
 
         <div class="restart">
           <i class="fa fa-repeat"></i>
@@ -36,8 +38,6 @@
 
       <ul class="deck"></ul>
 
-      <h2 class="timer">Timer <span id="time"></span></h2>
-
       <button class="start">Start</button>
 
       <div class="modal">
@@ -45,11 +45,13 @@
           <span class="close-button">&times;</span>
 
           <p class="message"></p>
-          <ul class="stars">
+          <ul class="modal-stars">
             <li><i class="fa fa-star"></i></li>
             <li><i class="fa fa-star"></i></li>
             <li><i class="fa fa-star"></i></li>
           </ul>
+
+          <button id="btn-play">Play Again</button>
         </div>
       </div>
     </div>

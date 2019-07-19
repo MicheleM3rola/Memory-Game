@@ -99,7 +99,7 @@ function removeClass() {
 function clearArray() {
   boxOpenCard = [];
   if (boxMatchCard.length === 16) {
-    scoreStars();
+    /*scoreStars();*/
     displayModal();
   }
 
@@ -143,7 +143,7 @@ function checkMatch() {
     insertMatch(card1, card2);
     moveCounter();
     setTimeout(clearArray, 1000);
-    setTimeout(enableClicks, 700);
+    setTimeout(enableClicks, 1000);
   } else {
     setTimeout(removeClass, 700);
     moveCounter();
@@ -163,6 +163,7 @@ let moves = 0;
 function moveCounter() {
   moves++;
   counterMoves.innerHTML = moves;
+  scoreStars();
 }
 
 /**RESTART BUTTON */
@@ -203,6 +204,7 @@ function startGame() {
 let modal = document.querySelector(".modal");
 let closeButton = document.querySelector(".close-button");
 let message = document.querySelector(".message");
+let btnPlayAgain = document.querySelector("#btn-play");
 
 function closeModal() {
   modal.classList.remove("show-modal");
@@ -217,14 +219,16 @@ function displayModal() {
    </br>
    Moves : ${moves}
    </br>
-   Times : ${secCounter} sec`;
+   Times : ${convertSeconds(secCounter)} sec`;
 
   clearInterval(timer);
+  modalScoreStars();
 
   return (message.innerHTML = congMex);
 }
 
 closeButton.addEventListener("click", closeModal);
+btnPlayAgain.addEventListener("click", closeModal);
 
 /**SCORE POINT */
 
@@ -233,14 +237,15 @@ let resetStars = document.querySelectorAll("ul.stars");
 
 let starsConteiner = [...stars];
 
+/**SCORE IN THE GAME PANEL */
 function scoreStars() {
-  if (moves > 8 && moves < 10) {
+  if (moves > 8 && moves < 12) {
     for (i = 0; i < 3; i++) {
       if (i > 2) {
         starsConteiner[i].style.visibility = "collapse";
       }
     }
-  } else if (moves > 10 && moves < 17) {
+  } else if (moves > 12 && moves <= 17) {
     for (i = 0; i < 3; i++) {
       if (i > 1) {
         starsConteiner[i].style.visibility = "collapse";
@@ -250,6 +255,34 @@ function scoreStars() {
     for (i = 0; i < 3; i++) {
       if (i > 0) {
         starsConteiner[i].style.visibility = "collapse";
+      }
+    }
+  }
+}
+
+/** SCORE IN THE MODAL */
+
+let modalStars = document.querySelectorAll(".modal-stars li");
+
+let modalStarsContainer = [...modalStars];
+
+function modalScoreStars() {
+  if (moves > 8 && moves < 12) {
+    for (i = 0; i < 3; i++) {
+      if (i > 2) {
+        modalStarsContainer[i].style.visibility = "collapse";
+      }
+    }
+  } else if (moves > 12 && moves <= 17) {
+    for (i = 0; i < 3; i++) {
+      if (i > 1) {
+        modalStarsContainer[i].style.visibility = "collapse";
+      }
+    }
+  } else if (moves > 17) {
+    for (i = 0; i < 3; i++) {
+      if (i > 0) {
+        modalStarsContainer[i].style.visibility = "collapse";
       }
     }
   }
@@ -276,21 +309,3 @@ function timerFun() {
 }
 
 startTimer.addEventListener("click", timerFun);
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
