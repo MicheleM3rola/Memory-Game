@@ -220,9 +220,9 @@ function removeClass() {
 }
 ```
 
-### Game Feature
+## Game Feature
 
-## Restart Button
+### Restart Button
 
 ```javascript
 function restart() {
@@ -246,7 +246,7 @@ function restart() {
 restartButton.addEventListener("click", restart);
 ```
 
-## Counter
+### Counter
 
 ```Javascript
 let moves = 0;
@@ -258,7 +258,7 @@ function moveCounter() {
 }
 ```
 
-##Timer
+### Timer
 
 ```javascript
 let insertTimer = document.querySelector("#time");
@@ -282,7 +282,7 @@ function timerFun() {
 startTimer.addEventListener("click", timerFun);
 ```
 
-## Score Point
+### Score Point
 
 In this case I used the same function twice on differents classes.
 
@@ -322,7 +322,7 @@ function scoreStars() {
 }
 ```
 
-## Modal
+### Modal
 
 Modal that pop up at the end when all the cards are matched.
 
